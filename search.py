@@ -90,23 +90,21 @@ class Node:
                 for (act, next) in problem.successor(self.state)]
 
 
-
 # ______________________________________________________________________________
 ## Uninformed Search algorithms
-
 
 def graph_search(problem, fringe):
     """Search through the successors of a problem to find a goal.
     The argument fringe should be an empty queue.
     If two paths reach a state, only use the best one. [Fig. 3.18]"""
-    generated_nodes = 1
     visited_nodes = 0
+    generated_nodes = 1
     closed = {}
     fringe.append(Node(problem.initial))
     while fringe:
         node = fringe.pop()
         prov_length = len(fringe)
-        visited_nodes +=1
+        visited_nodes += 1
         if problem.goal_test(node.state):
             print("Nodos generados: " + str(generated_nodes))
             print("Nodos visitados: " + str(visited_nodes))
@@ -126,6 +124,12 @@ def breadth_first_graph_search(problem):
 def depth_first_graph_search(problem):
     """Search the deepest nodes in the search tree first. [p 74]"""
     return graph_search(problem, Stack())
+
+def branch_and_bound_graph_search(problem):
+    return graph_search(problem, branch_and_bound())
+
+def branch_and_bound_subestimated_graph_search(problem):
+    return graph_search(problem, branch_and_bound_subestimated(problem))
 
 
 
@@ -256,6 +260,7 @@ class GPSProblem(Problem):
     def __init__(self, initial, goal, graph):
         Problem.__init__(self, initial, goal)
         self.graph = graph
+
 
     def successor(self, A):
         """Return a list of (action, result) pairs."""
