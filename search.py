@@ -97,11 +97,14 @@ def graph_search(problem, fringe):
     """Search through the successors of a problem to find a goal.
     The argument fringe should be an empty queue.
     If two paths reach a state, only use the best one. [Fig. 3.18]"""
+    visited_nodes = 0
     closed = {}
     fringe.append(Node(problem.initial))
     while fringe:
         node = fringe.pop()
+        visited_nodes +=1
         if problem.goal_test(node.state):
+            print("Nodos visitados: " + str(visited_nodes))
             return node
         if node.state not in closed:
             closed[node.state] = True
